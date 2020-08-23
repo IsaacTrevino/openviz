@@ -1,0 +1,15 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-openviz-dev-195135-authRole",
+            "UnauthRoleArn": "arn:aws:iam::255316991426:role/amplify-openviz-dev-195135-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::255316991426:role/amplify-openviz-dev-195135-authRole",
+            "Region": "us-east-2",
+            "DeploymentBucketName": "amplify-openviz-dev-195135-deployment",
+            "UnauthRoleName": "amplify-openviz-dev-195135-unauthRole",
+            "StackName": "amplify-openviz-dev-195135",
+            "StackId": "arn:aws:cloudformation:us-east-2:255316991426:stack/amplify-openviz-dev-195135/cd0b3a50-e4da-11ea-9b42-065e408dbd50",
+            "AmplifyAppId": "d2455zyr6abnnl"
+        }
+    }
+}

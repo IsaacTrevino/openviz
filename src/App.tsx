@@ -1,9 +1,5 @@
 import React from 'react';
-import './App.css';
-import { ApolloProvider } from '@apollo/client';
-import { ApolloClient, InMemoryCache } from '@apollo/client';
-import { gql } from '@apollo/client';
-import Layers from './layers';
+import { BrowserRouter as Router } from 'react-router-dom';
 import {
   createStyles,
   jssPreset,
@@ -11,27 +7,57 @@ import {
   StylesProvider,
   ThemeProvider
 } from '@material-ui/core';
+import { create } from 'jss';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import MomentUtils from '@date-io/moment';
+import { createTheme } from './theme';
+import Routes from './Routes';
+import { useQuery } from '@apollo/client';
+import { IS_DARK_MODE } from './apollo/queries';
 
-const client = new ApolloClient({
-  uri: 'https://48p1r2roz4.sse.codesandbox.io',
-  cache: new InMemoryCache()
-});
+
+const jss = create({ plugins: [...jssPreset().plugins] });
+
+const useStyles = makeStyles(() => createStyles({
+  '@global': {
+    '*': {
+      boxSizing: 'border-box',
+      margin: 0,
+      padding: 0,
+    },
+    html: {
+      '-webkit-font-smoothing': 'antialiased',
+      '-moz-osx-font-smoothing': 'grayscale',
+      height: '100%',
+      width: '100%',
+    },
+    body: {
+      height: '100%',
+      width: '100%'
+    },
+    '#root': {
+      height: '100%',
+      width: '100%'
+    }
+  }
+}));
 
 
 
 function App() {
-  return (
-    <ApolloProvider client={client}>
-      <div className='App'>
-        <header className='App-header'>
-          <h3>
-            OpenViz
-          </h3>
-          <Layers/>
-        </header>
-      </div>
+  useStyles();
+  const { data } = useQuery(IS_DARK_MODE);
 
-    </ApolloProvider>
+  return (
+    <ThemeProvider theme={createTheme(data.darkMode)}>
+      <StylesProvider jss={jss}>
+        <MuiPickersUtilsProvider utils={MomentUtils}>
+            <Router>
+              <Routes />
+            </Router>
+        </MuiPickersUtilsProvider>
+      </StylesProvider>
+    </ThemeProvider>
   );
 }
 

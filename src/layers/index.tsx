@@ -8,7 +8,11 @@ import Data from './data';
 
 
 const useStyles = makeStyles(() => ({
- root: {},
+ root: {
+   position: 'absolute',
+   height: '100%',
+   width: '100%'
+ },
 }));
 
 const Layers = (props: any) => {
@@ -16,11 +20,13 @@ const Layers = (props: any) => {
   const classes = useStyles();
 
   return (
-    <Search>
-      <Nodes>
-        <Data/>
-      </Nodes>
-    </Search>
+    <div className={classes.root}>
+      <Search>
+        <Nodes>
+          <Data/>
+        </Nodes>
+      </Search>
+    </div>
   )
 }
 
