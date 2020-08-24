@@ -6,5 +6,15 @@ This allows you to add the Node as a whole with connections.
 ### Example
 
 ```javascript
-
+  DataStore.save(
+    new Node({
+      name: 'some node'
+      position: {
+        x: 5,
+        y: 0,
+        z: 2
+      }
+      connections:  
+    })
+  );
 ```

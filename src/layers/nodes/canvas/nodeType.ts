@@ -10,5 +10,5 @@ export interface connection {
 export interface node {
   name: string
   position: position
-  connections: connection[]
+  connections?: node[]
 }

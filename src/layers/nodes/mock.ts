@@ -4,48 +4,48 @@ export const nodes: node[] = [
   {
     name: 'origin',
     position: [0, 0, 0],
-    connections: [
-      // no connections 
-    ]
+    // connections: [
+    //   // no connections 
+    // ]
   },
-  {
-    name: 'visualization',
-    position: [0, 0, 0],
-    connections: [
-      {
-        name: 'math',
-        position: [0, 5, 0]
-      },
-      {
-        name: 'thermodynamics',
-        position: [5, 5, 0]
-      },
-    ]
-  },
-  {
-    name: 'artificialIntelligence',
-    position: [0, 5, 0],
-    connections: [
-      {
-        name: 'physics',
-        position: [0, 0, 0]
-      }
-    ]
-  },
-  {
-    name: 'thermodynamics',
-    position: [5, 5, 0],
-    connections: [
-      {
-        name: 'physics',
-        position: [0, 0, 0]
-      },
-      {
-        name: 'math',
-        position: [0, 5, 0]
-      }
-    ]
-  },
+  // {
+  //   name: 'visualization',
+  //   position: [0, 0, 0],
+  //   connections: [
+  //     {
+  //       name: 'math',
+  //       position: [0, 5, 0]
+  //     },
+  //     {
+  //       name: 'thermodynamics',
+  //       position: [5, 5, 0]
+  //     },
+  //   ]
+  // },
+  // {
+  //   name: 'artificialIntelligence',
+  //   position: [0, 5, 0],
+  //   connections: [
+  //     {
+  //       name: 'physics',
+  //       position: [0, 0, 0]
+  //     }
+  //   ]
+  // },
+  // {
+  //   name: 'thermodynamics',
+  //   position: [5, 5, 0],
+  //   connections: [
+  //     {
+  //       name: 'physics',
+  //       position: [0, 0, 0]
+  //     },
+  //     {
+  //       name: 'math',
+  //       position: [0, 5, 0]
+  //     }
+  //   ]
+  // },
 ];
 
 

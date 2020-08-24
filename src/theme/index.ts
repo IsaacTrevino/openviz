@@ -1,6 +1,11 @@
-import { colors, createMuiTheme, responsiveFontSizes, ThemeOptions, Theme } from '@material-ui/core';
+import { 
+  colors, 
+  createMuiTheme, 
+  responsiveFontSizes 
+} from '@material-ui/core';
 import typography from './typography';
 import { softShadows, strongShadows } from './shadows';
+import { merge } from 'lodash';
 
 
 const baseConfig = <any>{
@@ -116,7 +121,7 @@ const themeConfigs = [
 
 
 export function createTheme(darkMode: boolean) {
-  const themeOptions = Object.assign({}, darkMode ? themeConfigs[1] : themeConfigs[0], baseConfig);
+  const themeOptions = merge({}, darkMode ? themeConfigs[1] : themeConfigs[0], baseConfig);
   return responsiveFontSizes(createMuiTheme(themeOptions));
 }
 

@@ -1,0 +1,17 @@
+type Node 
+  @model 
+{
+  id: ID!
+  title: String!
+  content: String
+  position: Position!
+  #connections: [Node!] @connection
+}
+
+type Position {
+  x: Float!
+  y: Float!
+  z: Float!
+}
+
+
