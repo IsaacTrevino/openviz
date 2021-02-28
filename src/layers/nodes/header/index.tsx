@@ -21,7 +21,10 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MailIcon from '@material-ui/icons/Mail';
 import NotificationsIcon from '@material-ui/icons/Notifications';
 import MoreIcon from '@material-ui/icons/MoreVert';
+import CubeIcon from '@material-ui/icons/AddBox';
+import NodeIcon from '@material-ui/icons/AddCircle';
 import AddNode from './addNode';
+import AddCube from './addCube';
 import { useRecoilState } from 'recoil';
 import { darkMode } from 'src/recoil';
 
@@ -93,16 +96,21 @@ const useStyles = makeStyles((theme: Theme) =>
         display: 'none',
       },
     },
+    appBar: {
+      border: 'none',
+      position: 'absolute',
+    }
   }),
 );
 
-const Header = () => {
+const Header = (props: any) => {
   const classes = useStyles();
   const [isDarkMode, setDarkMode] = useRecoilState(darkMode);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState<null | HTMLElement>(null);
 
-  const [isOpen, setOpen] = useState(false);
+  const [addNodeModal, setAddNodeModal] = useState(false);
+  const [addCubeModal, setAddCubeModal] = useState(false);
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
@@ -124,7 +132,11 @@ const Header = () => {
   };
 
   const renderAddNode = (
-    <AddNode isOpen={isOpen} setOpen={setOpen} /> 
+    <AddNode nodes={props.nodes} isOpen={addNodeModal} setOpen={setAddNodeModal} /> 
+  );
+
+  const renderAddCube = (
+    <AddCube isOpen={addCubeModal} setOpen={setAddCubeModal} /> 
   );
 
   const menuId = 'primary-search-account-menu';
@@ -185,13 +197,12 @@ const Header = () => {
 
   return (
     <div className={classes.grow}>
-      <AppBar position='absolute' color='transparent'>
+      <AppBar variant='outlined' color='transparent' className={classes.appBar} >
         <Toolbar>
           <IconButton
             edge="start"
             className={classes.menuButton}
             aria-label="open drawer"
-            onClick={() => setOpen(!isOpen)}
           >
             <MenuIcon />
           </IconButton>
@@ -211,6 +222,12 @@ const Header = () => {
           </div>
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <IconButton onClick={() => setAddNodeModal(!addNodeModal)}>
+              <NodeIcon/>
+            </IconButton>
+            <IconButton onClick={() => setAddCubeModal(!addCubeModal)}>
+              <CubeIcon/>
+            </IconButton>
             <Switch
               color='primary'
               checked={isDarkMode}
@@ -249,6 +266,7 @@ const Header = () => {
         </Toolbar>
       </AppBar>
       {renderAddNode}
+      {renderAddCube}
       {renderMobileMenu}
       {renderMenu}
     </div>

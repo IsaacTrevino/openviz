@@ -1,17 +1,55 @@
-type Node 
-  @model 
+type Cube 
+@auth(rules: [{ allow: public }])
+@model
 {
   id: ID!
   title: String!
+  position: Position!
+  nodes: [Node] @connection(keyName: "byCube", fields: ["id"])
+}
+
+
+type Node 
+@auth(rules: [{ allow: public }])
+@model 
+@key(name: "byCube", fields: ["cubeId"], queryField: "nodesByCube")
+@key(name: "byConnections", fields: ["nodeConnectionsId"])
+{
+  id: ID!
+  cubeId: ID!
+  title: String!
   content: String
   position: Position!
-  #connections: [Node!] @connection
+  connections: 
+}
+
+type Connection
+@model(queries: null)
+@key(name)
+{
+  id: ID!
+  nodes: [Nodes]
+}
+
+type Mutation {
+  addConnections(
+    id: ID!
+    nodeConnectionId: [ID]
+  ): Node
+  removeConnection(
+    id: ID!
+    index: Int!
+  ): Node
 }
 
 type Position {
-  x: Float!
-  y: Float!
-  z: Float!
+  x: Int!
+  y: Int!
+  z: Int!
 }
 
-
+type S3Object {
+  bucket: String!
+  region: String!
+  key: String!
+}

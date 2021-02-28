@@ -2,12 +2,13 @@ import React, {useEffect, useCallback, useState} from 'react';
 import { useTheme } from '@material-ui/core';
 import { Canvas, useUpdate } from 'react-three-fiber';
 import Node from './Node';
-// import Line from './Line';
+import Line from './Line';
 // import { nodes } from '../mock';
 // import { Vector3 } from 'three';
 import { DataStore } from 'aws-amplify';
-import { Node as NodeModel } from 'src/models'
-import { position } from './nodeType';
+import { Node as NodeModel } from 'src/models';
+import { API, graphqlOperation } from 'aws-amplify';
+import { listNodes } from 'src/graphql/queries';
 
 
 const CanvasContainer = (props: any) => {
@@ -24,24 +25,6 @@ const CanvasContainer = (props: any) => {
   // })
   //connections.
   const theme = useTheme();
-  const [nodes, setNodes]: any | null = useState(null);
-
-  const query = useCallback(() => {
-    const fetchNodes = async () => {
-      const nodes = await DataStore.query(NodeModel);
-      console.log('raw query:', nodes)
-      setNodes(nodes);
-    };
-    fetchNodes();
-  },[]);
-
-
-  useEffect(() => {
-    query();
-    console.log('query nodes', nodes)
-  },[]);
-
-
 
 
   return (
@@ -51,8 +34,8 @@ const CanvasContainer = (props: any) => {
     >
       <ambientLight />
       <pointLight position={[10, 10, 10]} />
-      {nodes?.map((node: { position: position, name: string }, i: number) => (
-        <Node key={i} position={node.position} title={node.name} url={`/${node.name}`} />
+      {props.nodes?.map((node: any, i: number) => (
+        <Node key={i} position={[node.position.x, node.position.y, node.position.z]} title={node.title} url={`/${node.title}`} />
       ))}
       {/* <Line startPosition={[-5, 0, 0]} endPosition={[5, 0, 0]} /> */}
     </Canvas>

@@ -25,10 +25,10 @@ import {
  import { Formik, Form } from 'formik';
  import * as Yup from 'yup';
  import { DataStore } from 'aws-amplify';
- import { Node } from 'src/models'
+ import { Cube } from 'src/models'
  import { PositionInput } from 'src/API';
  import { API, graphqlOperation } from 'aws-amplify';
- import { createNode } from 'src/graphql/mutations';
+ import { createCube } from 'src/graphql/mutations';
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -47,18 +47,32 @@ interface Props {
   setOpen: React.Dispatch<React.SetStateAction<boolean>>
   isOpen: boolean
   rest?: any
-  nodes: any
 }
 
 
 interface formTypes {
   title: string
   position: PositionInput
-  connections?: any[]
+  search?: string[]
+  connections?: string[]
 }
 
-const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
+const AddCube = ({ setOpen, isOpen, ...rest }: Props) => {
   const classes = useStyles();
+  const [cubes, setCubes]: any | null = useState(null);
+
+  // const query = useCallback(() => {
+  //   const fetchNodes = async () => {
+  //     const cubes = await DataStore.query(Cube);
+  //     setCubes(cubes);
+  //   };
+  //   fetchNodes();
+  // },[]);
+
+
+  // useEffect(() => {
+  //   query();
+  // },[]);
 
   const initialValues: formTypes = {
     title: '',
@@ -67,7 +81,8 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
       y: 0,
       z: 0
     },
-    connections: [],
+    search: ['test'],
+    connections: []
   };
 
   return (
@@ -89,7 +104,7 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
         <Container maxWidth='sm' className={classes.card}>
           <Card>
             <CardHeader
-              title='Add Node'
+              title='Add Cube'
               action={
                 <IconButton size='small' onClick={() => setOpen(!isOpen)}>
                   <SvgIcon fontSize='small'>
@@ -121,18 +136,15 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
                   setSubmitting
                 }) => {
                   try {
-                    console.log(values);
                     const result = await API.graphql(graphqlOperation(
-                      createNode, { input: {
+                      createCube, { input: {
                         title: values.title,
-                        cubeId: '50df0b8b-2796-409c-95a0-46136f9819bc',
-                        content: 'empty content',
                         position: {
                           x: Number(values.position.x),
                           y: Number(values.position.y),
                           z: Number(values.position.z)
                         },
-                        nodeConnectionsId: values.connections
+                        //connections: values.connections
                       }})
                     );
                     console.log('result', result);
@@ -153,9 +165,7 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
                   touched,
                   handleChange,
                   handleBlur,
-                  setFieldValue,
                   isSubmitting,
-                  /* and other goodies */
                 }) => (<>
                   {isSubmitting ? (
                   <Box
@@ -176,7 +186,6 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
                         label='Title'
                         variant='outlined'
                         onChange={handleChange}
-                        onBlur={handleBlur}
                         name='title'
                         value={values.title}
                       />
@@ -191,7 +200,6 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
                           label='x'
                           variant='outlined'
                           onChange={handleChange}
-                          onBlur={handleBlur}
                           name='position.x'
                           value={values.position.x}
                         />
@@ -205,7 +213,6 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
                           label='y'
                           variant='outlined'
                           onChange={handleChange}
-                          onBlur={handleBlur}
                           name='position.y'
                           value={values.position.y}
                         />
@@ -219,7 +226,6 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
                           label='z'
                           variant='outlined'
                           onChange={handleChange}
-                          onBlur={handleBlur}
                           name='position.z'
                           value={values.position.z}
                         />
@@ -229,20 +235,22 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
                       <Autocomplete
                         fullWidth
                         multiple
-                        id="connections"
+                        id="size-small-outlined-multi"
                         size="small"
-                        options={nodes}
-                        getOptionLabel={(options : any) => options.title}
-                        onChange={(e,v) => setFieldValue('connections', v.map(el => el.id))}
+                        options={['test']} //nodes?.map((node: { id: string }) => node.id)}
+                        getOptionLabel={(option) => option}
                         renderInput={(params: 
                           (JSX.IntrinsicAttributes & StandardTextFieldProps) | 
                           (JSX.IntrinsicAttributes & FilledTextFieldProps) | 
                           (JSX.IntrinsicAttributes & OutlinedTextFieldProps)) => (
                           <TextField {...params}
-                            name='connections'
-                            variant="outlined"
-                            label="Connections"
-                            placeholder="Nodes"
+                            onChange={handleChange}
+                            onBlur={handleBlur} 
+                            value={values.search} 
+                            name='search' 
+                            variant="outlined" 
+                            label="Connections" 
+                            placeholder="Nodes" 
                           />
                         )}
                       />
@@ -276,4 +284,4 @@ const AddNode = ({ nodes, setOpen, isOpen, ...rest }: Props) => {
   );
 };
 
-export default AddNode;
+export default AddCube;

@@ -2,12 +2,10 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateNodeInput = {
+export type CreateCubeInput = {
   id?: string | null,
   title: string,
-  content?: string | null,
   position: PositionInput,
-  _version?: number | null,
 };
 
 export type PositionInput = {
@@ -16,12 +14,11 @@ export type PositionInput = {
   z: number,
 };
 
-export type ModelNodeConditionInput = {
+export type ModelCubeConditionInput = {
   title?: ModelStringInput | null,
-  content?: ModelStringInput | null,
-  and?: Array< ModelNodeConditionInput | null > | null,
-  or?: Array< ModelNodeConditionInput | null > | null,
-  not?: ModelNodeConditionInput | null,
+  and?: Array< ModelCubeConditionInput | null > | null,
+  or?: Array< ModelCubeConditionInput | null > | null,
+  not?: ModelCubeConditionInput | null,
 };
 
 export type ModelStringInput = {
@@ -64,26 +61,33 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type UpdateNodeInput = {
+export type UpdateCubeInput = {
   id: string,
   title?: string | null,
-  content?: string | null,
   position?: PositionInput | null,
-  _version?: number | null,
 };
 
-export type DeleteNodeInput = {
+export type DeleteCubeInput = {
   id?: string | null,
-  _version?: number | null,
 };
 
-export type ModelNodeFilterInput = {
-  id?: ModelIDInput | null,
+export type CreateNodeInput = {
+  id?: string | null,
+  cubeId: string,
+  title: string,
+  content?: string | null,
+  position: PositionInput,
+  nodeConnectionsId?: string | null,
+};
+
+export type ModelNodeConditionInput = {
+  cubeId?: ModelIDInput | null,
   title?: ModelStringInput | null,
   content?: ModelStringInput | null,
-  and?: Array< ModelNodeFilterInput | null > | null,
-  or?: Array< ModelNodeFilterInput | null > | null,
-  not?: ModelNodeFilterInput | null,
+  nodeConnectionsId?: ModelIDInput | null,
+  and?: Array< ModelNodeConditionInput | null > | null,
+  or?: Array< ModelNodeConditionInput | null > | null,
+  not?: ModelNodeConditionInput | null,
 };
 
 export type ModelIDInput = {
@@ -102,6 +106,149 @@ export type ModelIDInput = {
   size?: ModelSizeInput | null,
 };
 
+export type UpdateNodeInput = {
+  id: string,
+  cubeId?: string | null,
+  title?: string | null,
+  content?: string | null,
+  position?: PositionInput | null,
+  nodeConnectionsId?: string | null,
+};
+
+export type DeleteNodeInput = {
+  id?: string | null,
+};
+
+export type ModelCubeFilterInput = {
+  id?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  and?: Array< ModelCubeFilterInput | null > | null,
+  or?: Array< ModelCubeFilterInput | null > | null,
+  not?: ModelCubeFilterInput | null,
+};
+
+export type ModelNodeFilterInput = {
+  id?: ModelIDInput | null,
+  cubeId?: ModelIDInput | null,
+  title?: ModelStringInput | null,
+  content?: ModelStringInput | null,
+  nodeConnectionsId?: ModelIDInput | null,
+  and?: Array< ModelNodeFilterInput | null > | null,
+  or?: Array< ModelNodeFilterInput | null > | null,
+  not?: ModelNodeFilterInput | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
+export type CreateCubeMutationVariables = {
+  input: CreateCubeInput,
+  condition?: ModelCubeConditionInput | null,
+};
+
+export type CreateCubeMutation = {
+  createCube:  {
+    __typename: "Cube",
+    id: string,
+    title: string,
+    position:  {
+      __typename: "Position",
+      x: number,
+      y: number,
+      z: number,
+    },
+    nodes:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type UpdateCubeMutationVariables = {
+  input: UpdateCubeInput,
+  condition?: ModelCubeConditionInput | null,
+};
+
+export type UpdateCubeMutation = {
+  updateCube:  {
+    __typename: "Cube",
+    id: string,
+    title: string,
+    position:  {
+      __typename: "Position",
+      x: number,
+      y: number,
+      z: number,
+    },
+    nodes:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type DeleteCubeMutationVariables = {
+  input: DeleteCubeInput,
+  condition?: ModelCubeConditionInput | null,
+};
+
+export type DeleteCubeMutation = {
+  deleteCube:  {
+    __typename: "Cube",
+    id: string,
+    title: string,
+    position:  {
+      __typename: "Position",
+      x: number,
+      y: number,
+      z: number,
+    },
+    nodes:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
 export type CreateNodeMutationVariables = {
   input: CreateNodeInput,
   condition?: ModelNodeConditionInput | null,
@@ -111,6 +258,7 @@ export type CreateNodeMutation = {
   createNode:  {
     __typename: "Node",
     id: string,
+    cubeId: string,
     title: string,
     content: string | null,
     position:  {
@@ -119,9 +267,21 @@ export type CreateNodeMutation = {
       y: number,
       z: number,
     },
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
+    nodeConnectionsId: string | null,
+    connections:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -136,6 +296,7 @@ export type UpdateNodeMutation = {
   updateNode:  {
     __typename: "Node",
     id: string,
+    cubeId: string,
     title: string,
     content: string | null,
     position:  {
@@ -144,9 +305,21 @@ export type UpdateNodeMutation = {
       y: number,
       z: number,
     },
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
+    nodeConnectionsId: string | null,
+    connections:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -161,6 +334,7 @@ export type DeleteNodeMutation = {
   deleteNode:  {
     __typename: "Node",
     id: string,
+    cubeId: string,
     title: string,
     content: string | null,
     position:  {
@@ -169,43 +343,87 @@ export type DeleteNodeMutation = {
       y: number,
       z: number,
     },
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
+    nodeConnectionsId: string | null,
+    connections:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
 };
 
-export type SyncNodesQueryVariables = {
-  filter?: ModelNodeFilterInput | null,
-  limit?: number | null,
-  nextToken?: string | null,
-  lastSync?: number | null,
+export type GetCubeQueryVariables = {
+  id: string,
 };
 
-export type SyncNodesQuery = {
-  syncNodes:  {
-    __typename: "ModelNodeConnection",
+export type GetCubeQuery = {
+  getCube:  {
+    __typename: "Cube",
+    id: string,
+    title: string,
+    position:  {
+      __typename: "Position",
+      x: number,
+      y: number,
+      z: number,
+    },
+    nodes:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type ListCubesQueryVariables = {
+  filter?: ModelCubeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type ListCubesQuery = {
+  listCubes:  {
+    __typename: "ModelCubeConnection",
     items:  Array< {
-      __typename: "Node",
+      __typename: "Cube",
       id: string,
       title: string,
-      content: string | null,
       position:  {
         __typename: "Position",
         x: number,
         y: number,
         z: number,
       },
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
+      nodes:  {
+        __typename: "ModelNodeConnection",
+        nextToken: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
   } | null,
 };
 
@@ -217,6 +435,7 @@ export type GetNodeQuery = {
   getNode:  {
     __typename: "Node",
     id: string,
+    cubeId: string,
     title: string,
     content: string | null,
     position:  {
@@ -225,9 +444,21 @@ export type GetNodeQuery = {
       y: number,
       z: number,
     },
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
+    nodeConnectionsId: string | null,
+    connections:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -245,6 +476,7 @@ export type ListNodesQuery = {
     items:  Array< {
       __typename: "Node",
       id: string,
+      cubeId: string,
       title: string,
       content: string | null,
       position:  {
@@ -253,14 +485,140 @@ export type ListNodesQuery = {
         y: number,
         z: number,
       },
-      _version: number,
-      _deleted: boolean | null,
-      _lastChangedAt: number,
+      nodeConnectionsId: string | null,
+      connections:  {
+        __typename: "ModelNodeConnection",
+        nextToken: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,
     nextToken: string | null,
-    startedAt: number | null,
+  } | null,
+};
+
+export type NodesByCubeQueryVariables = {
+  cubeId?: string | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelNodeFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type NodesByCubeQuery = {
+  nodesByCube:  {
+    __typename: "ModelNodeConnection",
+    items:  Array< {
+      __typename: "Node",
+      id: string,
+      cubeId: string,
+      title: string,
+      content: string | null,
+      position:  {
+        __typename: "Position",
+        x: number,
+        y: number,
+        z: number,
+      },
+      nodeConnectionsId: string | null,
+      connections:  {
+        __typename: "ModelNodeConnection",
+        nextToken: string | null,
+      } | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type OnCreateCubeSubscription = {
+  onCreateCube:  {
+    __typename: "Cube",
+    id: string,
+    title: string,
+    position:  {
+      __typename: "Position",
+      x: number,
+      y: number,
+      z: number,
+    },
+    nodes:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnUpdateCubeSubscription = {
+  onUpdateCube:  {
+    __typename: "Cube",
+    id: string,
+    title: string,
+    position:  {
+      __typename: "Position",
+      x: number,
+      y: number,
+      z: number,
+    },
+    nodes:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
+  } | null,
+};
+
+export type OnDeleteCubeSubscription = {
+  onDeleteCube:  {
+    __typename: "Cube",
+    id: string,
+    title: string,
+    position:  {
+      __typename: "Position",
+      x: number,
+      y: number,
+      z: number,
+    },
+    nodes:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
+    createdAt: string,
+    updatedAt: string,
   } | null,
 };
 
@@ -268,6 +626,7 @@ export type OnCreateNodeSubscription = {
   onCreateNode:  {
     __typename: "Node",
     id: string,
+    cubeId: string,
     title: string,
     content: string | null,
     position:  {
@@ -276,9 +635,21 @@ export type OnCreateNodeSubscription = {
       y: number,
       z: number,
     },
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
+    nodeConnectionsId: string | null,
+    connections:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -288,6 +659,7 @@ export type OnUpdateNodeSubscription = {
   onUpdateNode:  {
     __typename: "Node",
     id: string,
+    cubeId: string,
     title: string,
     content: string | null,
     position:  {
@@ -296,9 +668,21 @@ export type OnUpdateNodeSubscription = {
       y: number,
       z: number,
     },
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
+    nodeConnectionsId: string | null,
+    connections:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,
@@ -308,6 +692,7 @@ export type OnDeleteNodeSubscription = {
   onDeleteNode:  {
     __typename: "Node",
     id: string,
+    cubeId: string,
     title: string,
     content: string | null,
     position:  {
@@ -316,9 +701,21 @@ export type OnDeleteNodeSubscription = {
       y: number,
       z: number,
     },
-    _version: number,
-    _deleted: boolean | null,
-    _lastChangedAt: number,
+    nodeConnectionsId: string | null,
+    connections:  {
+      __typename: "ModelNodeConnection",
+      items:  Array< {
+        __typename: "Node",
+        id: string,
+        cubeId: string,
+        title: string,
+        content: string | null,
+        nodeConnectionsId: string | null,
+        createdAt: string,
+        updatedAt: string,
+      } | null > | null,
+      nextToken: string | null,
+    } | null,
     createdAt: string,
     updatedAt: string,
   } | null,

@@ -4,9 +4,11 @@ import { schema } from './schema';
 
 
 
-const { Node, Position } = initSchema(schema);
+const { Cube, Node, Position, S3Object } = initSchema(schema);
 
 export {
+  Cube,
   Node,
-  Position
+  Position,
+  S3Object
 };

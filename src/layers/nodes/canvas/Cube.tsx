@@ -3,14 +3,14 @@ import React, {useState, useRef} from 'react';
 import { Vector3 } from 'three';
 import { position } from './nodeType';
 
-interface nodeProps {
+interface cubeProps {
   position: position
   title: string
   url: string
   rest?: any
 }
 
-function Node({ position, title, url, ...rest }: nodeProps) {
+function Cube({ position, title, url, ...rest }: cubeProps) {
 
   const mesh:any = useRef()
 
@@ -23,16 +23,16 @@ function Node({ position, title, url, ...rest }: nodeProps) {
       {...rest}
       ref={mesh}
       position={position}
-      scale={hovered ? [1.2, 1.2, 1.2] : [1, 1, 1]}
+      scale={hovered ? [1.2, 1.2, 1] : [1, 1, 1]}
       onClick={(e) => setActive(!active)}
       onPointerOver={(e) => setHover(true)}
       onPointerOut={(e) => setHover(false)}
     >
-      <sphereBufferGeometry attach="geometry" args={[1, 32, 32]} />
-      <meshStandardMaterial attach="material" color={hovered ? colors.blue[700] : colors.blue[800]}/>
+      <boxBufferGeometry attach="geometry" args={[1, 1, 1]} />
+      <meshStandardMaterial attach="material" color={hovered ? colors.red[700] : colors.red[800]}/>
       
     </mesh>
   );
 }
 
-export default Node;
+export default Cube;
